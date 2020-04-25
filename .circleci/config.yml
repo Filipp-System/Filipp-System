@@ -10,14 +10,14 @@ jobs:
 
       - run:
           name: Dotnet Packages Checksum File
-          command: bash ./ci-dotnet-packages.sh
+          command: bash ci-dotnet-packages.sh
 
       - restore_cache:
           keys:
             - dotnet-packages-key-v1-{{ checksum "packages.txt" }}
       - run: 
           name: Restore Packages
-          command: bash ./ci-dotnet-restore.sh
+          command: bash ci-dotnet-restore.sh
       - save_cache:
           key: dotnet-packages-key-v1-{{ checksum "packages.txt" }}
           paths:
