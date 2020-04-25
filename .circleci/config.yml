@@ -7,23 +7,15 @@ jobs:
     
     steps:
       - checkout
-
       - run:
-          name: Dotnet Packages Checksum File
-          command: bash /.circleci/ci-dotnet-packages.sh
-
-      - restore_cache:
-          keys:
-            - dotnet-packages-key-v1-{{ checksum "packages.txt" }}
-      - run: 
-          name: Restore Packages
-          command: bash /.circleci/ci-dotnet-restore.sh
-      - save_cache:
-          key: dotnet-packages-key-v1-{{ checksum "packages.txt" }}
-          paths:
-            - ~/.nuget/packages
-            - ./objs.tar.gz
-
+          name: restore packages
+          command:
+            dotnet restore
       - run:
-          name: Build
-          command: bash /.circleci/ci-build.sh
+          name: test app
+          command:
+            dotnet test
+      - run:
+          name: build app
+          command:
+            dotnet build
