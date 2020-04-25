@@ -6,7 +6,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-PATHS_TO_FIND="./**/*.csproj" # change it by depend on your project folder structure.
+PATHS_TO_FIND="root/project/src/*/*.csproj" # change it by depend on your project folder structure.
 
 addPackages () {
     local search="$1"
