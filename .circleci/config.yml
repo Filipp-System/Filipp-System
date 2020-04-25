@@ -9,17 +9,20 @@ jobs:
       - checkout
 
       - run:
-          name: restore packages
-          command:
-            dotnet restore
-      - run:
-          name: build app
-          command:
-            dotnet build
-      - run:
-          name: test app
-          command:
-            dotnet test
+          name: Dotnet Packages Checksum File
+          command: bash ./ci-dotnet-packages.sh
+
+      - restore_cache:
+          keys:
+            - dotnet-packages-key-v1-{{ checksum "packages.txt" }}
+      - run: 
+          name: Restore Packages
+          command: bash ./ci-dotnet-restore.sh
+      - save_cache:
+          key: dotnet-packages-key-v1-{{ checksum "packages.txt" }}
+          paths:
+            - ~/.nuget/packages
+            - ./objs.tar.gz
 
       - run:
           name: Build
