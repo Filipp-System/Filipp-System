@@ -26,4 +26,4 @@ jobs:
 
       - run:
           name: Build
-          command: bash ./ci-build.sh
+          command: bash /.circleci/ci-build.sh
