@@ -1,15 +1,46 @@
-version: 2
+version: 2.1
+
+orbs:
+  windows: circleci/windows@2.4.0
 
 jobs:
-  build:
-    working_directory: /root/project/src/
-    docker:
-      - image: mcr.microsoft.com/dotnet/core/sdk:3.1
-    environment:
-      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  test:
+    description: Setup and run application tests
+    executor:
+      name: windows/default
     steps:
       - checkout
-      - run: dotnet restore
-      - run: dotnet test
-      - run: dotnet build
+      - restore_cache:
+          keys:
+            - dotnet-packages-v1-{{ checksum "src/SPA.Blazor/SPA.Blazor.csproj" }}
+      - run:
+          name: "Install project dependencies"
+          command: dotnet.exe restore
+      - save_cache:
+          paths:
+            - C:\Users\circleci\.nuget\packages
+          key: dotnet-packages-v1-{{ checksum "src/SPA.Blazor/SPA.Blazor.csproj" }}
+      - run:
+          name: "Run Application Tests"
+          command: dotnet.exe test -v n --results-directory:test_coverage --collect:"Code Coverage"
+      - run:
+          name: "Print Working Directory"
+          command: pwd
+      - store_artifacts:
+          path: C:\Users\circleci\project\test_coverage
+  build:
+    description: Build application with Release configuration
+    executor:
+      name: windows/default
+    steps:
+      - checkout
+      - run:
+          name: "Build Application according to some given configuration"
+          command: dotnet.exe build --configuration Release
+workflows:
+  test_and_build:
+    jobs:
+      - test
+      - build:
+          requires:
+            - test
