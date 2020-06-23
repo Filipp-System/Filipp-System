@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{8A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilippSystem.IdentityServer", "src\Services\FilippSystem.IdentityServer\FilippSystem.IdentityServer.csproj", "{7F8C5ADA-F700-42E8-B6F8-28F486C45ABE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{AAB341ED-A686-45EC-BE7D-178F42D5DD00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilippSystem.Logging", "src\FilippSystem.Logging\FilippSystem.Logging.csproj", "{5629FEAE-7C64-49F9-A602-2C9D43AA27AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,10 @@ Global
 		{7F8C5ADA-F700-42E8-B6F8-28F486C45ABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F8C5ADA-F700-42E8-B6F8-28F486C45ABE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F8C5ADA-F700-42E8-B6F8-28F486C45ABE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5629FEAE-7C64-49F9-A602-2C9D43AA27AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5629FEAE-7C64-49F9-A602-2C9D43AA27AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5629FEAE-7C64-49F9-A602-2C9D43AA27AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5629FEAE-7C64-49F9-A602-2C9D43AA27AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +50,8 @@ Global
 		{54268D53-5639-4E17-A0FF-C21C829F46D2} = {50EAB7FC-810B-49C9-962F-0A3DB27D1504}
 		{8ACF9C23-AB45-45EE-B455-18E23EE252E7} = {FC722C34-0D51-4F86-9495-4AD528E20D86}
 		{7F8C5ADA-F700-42E8-B6F8-28F486C45ABE} = {8ACF9C23-AB45-45EE-B455-18E23EE252E7}
+		{AAB341ED-A686-45EC-BE7D-178F42D5DD00} = {FC722C34-0D51-4F86-9495-4AD528E20D86}
+		{5629FEAE-7C64-49F9-A602-2C9D43AA27AB} = {AAB341ED-A686-45EC-BE7D-178F42D5DD00}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FFF68CC2-B9AF-44FB-BC47-E58EF366FB3E}
