@@ -12,13 +12,13 @@ namespace Calculator.DataAccess
     {
         private static readonly string Unknown = nameof(Unknown);
 
-        public async Task<int> ProcessEmployeeChangesAsync(
-            ClaimsPrincipal currentUser,
-            EmployeeContext context,
-            Func<Task<int>> saveChangesAsync)
-        {
+        //public async Task<int> ProcessEmployeeChangesAsync(
+        //    ClaimsPrincipal currentUser,
+        //    EmployeeContext context,
+        //    Func<Task<int>> saveChangesAsync)
+        //{
 
-        }
+        //}
     }
 
    
