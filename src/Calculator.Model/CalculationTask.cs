@@ -2,13 +2,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Calculator.WebAPI.Models
+namespace Calculator.Model
 {
     public class CalculationTask
     {
         [Key]
         public int CalculationTaskID { get; set; }
-        [ForeignKey(nameof(Models.Task))] 
+        [ForeignKey(nameof(Model.Task))] 
         [Required]
         public int TaskID { get; set; }
         [ForeignKey(nameof(Calculation))]

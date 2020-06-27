@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Calculator.WebAPI.Models
+namespace Calculator.Model
 {
     public class Calculation
     {
