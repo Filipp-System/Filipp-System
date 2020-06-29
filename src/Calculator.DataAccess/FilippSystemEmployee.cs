@@ -7,11 +7,11 @@ using Calculator.Model;
 
 namespace Calculator.DataAccess
 {
-    public class CalculatorEmployee 
+    public class FilippSystemEmployee 
     {
         [Key]
         [Required]
-        public int CalculatorEmployeeID { get; set; }
+        public int FilippSystemEmployeeID { get; set; }
 
         [Required]
         public DateTimeOffset EventTime { get; set; } = DateTimeOffset.UtcNow;

@@ -11,6 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using Calculator.BaseRepository;
+using Calculator.DataAccess;
+using Calculator.Model;
+using Calculator.Repository;
 using Calculator.Server.Data;
 using Calculator.Server.Models;
 
@@ -18,6 +22,9 @@ namespace Calculator.Server
 {
     public class Startup
     {
+        private static readonly string DefaultConnection =
+            nameof(DefaultConnection);
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,18 +36,28 @@ namespace Calculator.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
+            services.AddDbContext<ApplicationFilippSystemDbContext>(options =>
+                options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationFilippSystemDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<ApplicationUser, ApplicationFilippSystemDbContext>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddDbContextFactory<EmployeeContext>(opt =>
+                opt.UseSqlite(Configuration.GetConnectionString(EmployeeContext.BlazorFilippSystemDb))
+                    .EnableSensitiveDataLogging());
+
+            // add the repository
+            services.AddScoped<IRepository<Employee, EmployeeContext>, EmployeeRepository>();
+            services.AddScoped<IBasicRepository<Employee>>(sp =>
+                sp.GetService<IRepository<Employee, EmployeeContext>>());
+            services.AddScoped<IUnitOfWork<Employee>, UnitOfWork<EmployeeContext, Employee>>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
