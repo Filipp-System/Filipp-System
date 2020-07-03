@@ -13,6 +13,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\Calculator.BaseRepository\Calculator.BaseRepository.csproj" />
     <ProjectReference Include="..\Calculator.Model\Calculator.Model.csproj" />
   </ItemGroup>
 

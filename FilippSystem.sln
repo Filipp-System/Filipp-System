@@ -21,13 +21,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{508515
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{6B6930AC-293A-44C2-B519-E4C57944021A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.DataAccess.Tests", "src\test\Calculator.DataAccess.Tests\Calculator.DataAccess.Tests.csproj", "{3AB21D38-4F1E-41B4-B825-BB709F9D310B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.DataAccess.Tests", "src\test\Calculator.DataAccess.Tests\Calculator.DataAccess.Tests.csproj", "{3AB21D38-4F1E-41B4-B825-BB709F9D310B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.BaseRepository", "src\Calculator.BaseRepository\Calculator.BaseRepository.csproj", "{559C5A4F-00A2-45DC-99E1-ACB1B62F4B13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.BaseRepository", "src\Calculator.BaseRepository\Calculator.BaseRepository.csproj", "{559C5A4F-00A2-45DC-99E1-ACB1B62F4B13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.Repository", "src\Calculator.Repository\Calculator.Repository.csproj", "{B390EB14-6565-4339-87E9-DDFF331C7260}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.Repository", "src\Calculator.Repository\Calculator.Repository.csproj", "{B390EB14-6565-4339-87E9-DDFF331C7260}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.Controls", "src\Calculator.Controls\Calculator.Controls.csproj", "{252C4D59-D817-4886-BEF8-32064F30D4CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.Controls", "src\Calculator.Controls\Calculator.Controls.csproj", "{252C4D59-D817-4886-BEF8-32064F30D4CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
