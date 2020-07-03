@@ -59,6 +59,9 @@ namespace Calculator.Server
                 sp.GetService<IRepository<Employee, EmployeeContext>>());
             services.AddScoped<IUnitOfWork<Employee>, UnitOfWork<EmployeeContext, Employee>>();
 
+            // seeding the first time
+            services.AddScoped<FilippSystemSeed>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

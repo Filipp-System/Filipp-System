@@ -60,7 +60,22 @@
             <ConcurrencyField Model="@Employee" DbModel="@DbEmployee" Property="obj => obj?.ZipCode.ToString()" />
         </label>
     </p>
-    <h2>Beruf</h2>
+    <h2>Angestellten Informationen</h2>
+    <p>
+        <label>
+            Beruf:
+            <InputText @bind-Value="Employee.Profession" />
+            <ConcurrencyField Model="@Employee" DbModel="@DbEmployee" Property="obj => obj?.Profession" />
+        </label>
+        <label>
+            Gehalt:
+            <InputText @bind-Value="Employee.Salary.ToString()" />
+            <ConcurrencyField Model="@Employee" DbModel="@DbEmployee" Property="obj => obj?.Salary.ToString()" />
+        </label>
+    </p>
+    <br />
+    <button disabled="@Busy" class="btn btn-warning" @onclick="@(async  () => await  CancelAsync())">Abbrechen</button>
+    <button disabled="@Busy" type="submit" class="btn btn-primary">Senden</button>
 </EditForm>
 }
 @code {
