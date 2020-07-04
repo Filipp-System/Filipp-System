@@ -1,0 +1,16 @@
+﻿@page "/View/{EmployeeID:int}"
+
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
+
+<ViewEmployeeControl EmployeeID="EmployeeID"/>
+
+@code {
+
+    /// <summary>
+    /// Id from route of employee.
+    /// </summary>
+    [Parameter]
+    public int EmployeeID { get; set; }
+}

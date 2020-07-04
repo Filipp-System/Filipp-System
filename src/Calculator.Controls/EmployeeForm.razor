@@ -1,13 +1,14 @@
 ﻿@using Calculator.Model;
 @using Microsoft.AspNetCore.Components.Forms;
 @using Task = System.Threading.Tasks.Task
+@using System.Globalization
 
 
 <h1>@Mode Mitarbeiter</h1>
 <hr />
 @if (Employee != null)
 {
-<EditForm Model="@Employee" OnInvalidSubmit="(async () => await HandleSubmitAsync(false))"
+<EditForm Model="@Employee" OnInvalidSubmit="async () => await HandleSubmitAsync(false)"
           OnValidSubmit="(async () => await HandleSubmitAsync(true))">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -69,12 +70,12 @@
         </label>
         <label>
             Gehalt:
-            <InputText @bind-Value="Employee.Salary.ToString()" />
+            <InputText @bind-Value="Employee.Salary.ToString(CultureInfo.InvariantCulture)" />
             <ConcurrencyField Model="@Employee" DbModel="@DbEmployee" Property="obj => obj?.Salary.ToString()" />
         </label>
     </p>
     <br />
-    <button disabled="@Busy" class="btn btn-warning" @onclick="@(async  () => await  CancelAsync())">Abbrechen</button>
+    <button disabled="@Busy" class="btn btn-warning" @onclick="@(async  () => await  CancelAsync())">Abbrechen</button>&nbsp;
     <button disabled="@Busy" type="submit" class="btn btn-primary">Senden</button>
 </EditForm>
 }
@@ -114,18 +115,18 @@
     /// Prevent multiple asynchronous operations at the same time.
     /// </summary>
     [Parameter]
-    public bool Busy { get; set; }
+    public bool Busy { get; private set; }
 
     /// <summary>
     /// Mode
     /// </summary>
-    public string Mode => IsAdd ? "Anlegen" : "Bearbeiten";
+    private string Mode => IsAdd ? "Anlegen" : "Bearbeiten";
 
     /// <summary>
     /// Ask to cancel.
     /// </summary>
     /// <returns></returns>
-    public async Task CancelAsync()
+    private async Task CancelAsync()
     {
         await CancelRequest.InvokeAsync(null);
     }
