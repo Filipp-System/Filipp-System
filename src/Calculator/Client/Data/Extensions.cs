@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Calculator.Controls.Grid;
 using Calculator.Model;
 
 namespace Calculator.Client.Data
 {
+    /// <summary>
+    /// Extension class with helpers
+    /// </summary>
     public static class Extensions
     {
         /// <summary>
@@ -21,10 +21,20 @@ namespace Calculator.Client.Data
             helper.TotalItemCount = newData.TotalItemCount;
         }
 
+        /// <summary>
+        /// Helper to transfer concurrency information from the repository to the data object.
+        /// </summary>
+        /// <param name="employee">The <see cref="Employee"/> being resolved.</param>
+        /// <param name="repository">The <see cref="WasmRepository"/> holding the concurrency values.</param>
+        /// <returns>The <see cref="EmployeeConcurrencyResolver"/> instance.</returns>
         public static EmployeeConcurrencyResolver ToConcurrencyResolver(this Employee employee,
             WasmRepository repository)
         {
-            throw new NotImplementedException();
+            return new EmployeeConcurrencyResolver()
+            {
+                OriginalEmployee = employee,
+                RowVersion = repository.RowVersion
+            };
         }
     }
 }

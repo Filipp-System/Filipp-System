@@ -1,7 +1,35 @@
 ﻿@page "/"
+@page "/{Page:int}"
 
-<h1>Hello, world!</h1>
+@using Microsoft.AspNetCore.Authorization
+@using Calculator.BaseRepository
+@using Calculator.Model
+@using Task = System.Threading.Tasks.Task
 
-Welcome to your new app.
+@attribute [Authorize]
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<ListControl Page="Page" FetchEmployeeAsync="(repository, employees) => FetchAsync(repository, employees)" />
+
+<p>Diese Ansicht ist nur für die erste alpha version so gestaltet um das wesentliche zu testen.</p>
+<br/>
+<p>Hier wird das Dashboard zukünftig sein.</p>
+
+@code
+{
+    /// <summary>
+    /// Allow route-based navigation
+    /// </summary>
+    [Parameter]
+    public int Page { get; set; }
+
+    /// <summary>
+    /// Pass in the actual work so this can be reused between client and server
+    /// </summary>
+    /// <param name="repository">The <see cref="IBasicRepository{Employee}"/> to use.</param>
+    /// <param name="employees">How to handle the returned <see cref="ICollection{Employee}"/>.</param>
+    /// <returns>A <see cref="System.Threading.Tasks.Task"/></returns>
+    public async Task FetchAsync(IBasicRepository<Employee> repository, Action<ICollection<Employee>> employees)
+    {
+        employees((await repository.GetListAsync()).ToList());
+    }
+}

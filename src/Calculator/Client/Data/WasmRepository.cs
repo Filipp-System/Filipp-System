@@ -12,6 +12,9 @@ using Task = System.Threading.Tasks.Task;
 
 namespace Calculator.Client.Data
 {
+    /// <summary>
+    /// Client implementation of the <see cref="IBasicRepository{Employee}"/>.
+    /// </summary>
     public class WasmRepository : IBasicRepository<Employee>
     {
         private readonly HttpClient _apiClient;
