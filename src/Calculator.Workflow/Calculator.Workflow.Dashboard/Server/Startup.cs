@@ -6,6 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using Elsa.Activities.Http.Extensions;
+using Elsa.Activities.Timers.Extensions;
+using Elsa.Persistence.EntityFrameworkCore.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Calculator.Workflow.Dashboard.Server
 {
@@ -22,7 +26,11 @@ namespace Calculator.Workflow.Dashboard.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddElsa(elsa =>
+                    elsa.AddEntityFrameworkStores(options =>
+                        options.UseSqlite(Configuration["ElsaDataSource"])));
+            services.AddHttpActivities()
+                .AddTimerActivities();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -46,6 +54,8 @@ namespace Calculator.Workflow.Dashboard.Server
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
+            app.UseHttpActivities();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -54,6 +64,8 @@ namespace Calculator.Workflow.Dashboard.Server
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
             });
+
+            app.UseWelcomePage();
         }
     }
 }

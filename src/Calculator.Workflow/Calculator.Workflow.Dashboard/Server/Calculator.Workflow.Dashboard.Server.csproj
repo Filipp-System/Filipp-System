@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Elsa" Version="1.2.2.29" />
+    <PackageReference Include="Elsa.Persistence.EntityFrameworkCore" Version="1.2.2.29" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
   </ItemGroup>
 
