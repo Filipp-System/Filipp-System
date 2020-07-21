@@ -25,11 +25,11 @@ namespace Calculator.Model
         [Required] 
         public string Street { get; set; }
         [Required] 
-        public int HouseNumber { get; set; }
+        public string HouseNumber { get; set; }
         public string HouseNumberExtension { get; set; }
         [Required]
         [RegularExpression(@"^(?!01000|99999)(0[1-9]\d{3}|[1-9]\d{4})$", ErrorMessage = "Enter a valid format from 01001 to 99998")]
-        public int ZipCode { get; set; }
+        public string ZipCode { get; set; }
 
         [Required] 
         public string Profession { get; set; }

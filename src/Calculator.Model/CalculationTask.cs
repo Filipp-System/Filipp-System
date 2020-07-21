@@ -8,9 +8,6 @@ namespace Calculator.Model
     {
         [Key]
         public int CalculationTaskID { get; set; }
-        [ForeignKey(nameof(Model.Task))] 
-        [Required]
-        public int TaskID { get; set; }
         [ForeignKey(nameof(Calculation))]
         [Required]
         public int CalculationID { get; set; }
@@ -19,9 +16,9 @@ namespace Calculator.Model
         public DateTime CreatedAt { get; set; }
         [Required]
         [DataType(DataType.DateTime)]
-        public DateTime LastSave { get; set; }
+        public DateTime LastUpdated { get; set; }
+        [Required]
 
-        public Task Task { get; set; }
         public Calculation Calculation { get; set; }
     }
 }

@@ -8,6 +8,12 @@
     <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="EmployeeForm.razor.bkp" />
+    <None Remove="EmployeeListHeader.razor.bkp" />
+    <None Remove="EmployeeListRow.razor.bkp" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="DevExpress.Blazor" Version="20.1.4" />
@@ -19,13 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Calculator.BaseRepository\Calculator.BaseRepository.csproj" />
     <ProjectReference Include="..\Calculator.Model\Calculator.Model.csproj" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Content Update="EmployeeListRow.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
   </ItemGroup>
 
 </Project>

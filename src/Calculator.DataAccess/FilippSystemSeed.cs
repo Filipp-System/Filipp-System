@@ -80,9 +80,9 @@ namespace Calculator.DataAccess
                 Street = RandomPick(_streets),
                 City = RandomPick(_cities),
                 Profession = RandomPick(_professions),
-                HouseNumber = _random.Next(1, 279),
+                HouseNumber = _random.Next(1, 279).ToString(),
                 HouseNumberExtension = RandomPick(_houseExtensions),
-                ZipCode = _random.Next(10000, 99998),
+                ZipCode = _random.Next(10000, 99998).ToString(),
                 Salary = _random.Next(1200, 6500)
             };
             return employee;

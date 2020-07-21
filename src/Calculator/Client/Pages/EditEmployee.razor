@@ -8,7 +8,7 @@
 
 @attribute [Authorize]
 
-<EditEmployeeControl EmployeeID="@EmployeeID" Service="Service" />
+@*<EditEmployeeControl EmployeeID="@EmployeeID" Service="Service" />*@
 
 @code {
 
@@ -16,6 +16,6 @@
     /// ID of <see cref="Employee"/> to edit.
     /// </summary>
     [Parameter]
-    private int EmployeeID { get; set; }
+    public int EmployeeID { get; set; }
 
 }

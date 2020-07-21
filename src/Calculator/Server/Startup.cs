@@ -38,7 +38,7 @@ namespace Calculator.Server
         {
             services.AddDbContext<ApplicationFilippSystemDbContext>(options =>
                 options.UseSqlite(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("blazorfilippsystemdb")));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationFilippSystemDbContext>();

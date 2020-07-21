@@ -5,10 +5,20 @@
 @using Calculator.BaseRepository
 @using Calculator.Model
 @using Task = System.Threading.Tasks.Task
+@using DevExpress.Blazor
+@using System.Collections.ObjectModel
 
 @attribute [Authorize]
 
-<ListControl Page="Page" FetchEmployeeAsync="(repository, employees) => FetchAsync(repository, employees)" />
+@*<ListControl Page="Page" FetchEmployeeAsync="(repository, employees) => FetchAsync(repository, employees)" />*@
+
+    <DxDataGrid Data="@employees">
+        <DxDataGridColumn Field="@nameof(Employee.FirstName)" />
+        <DxDataGridColumn Field="@nameof(Employee.LastName)" />
+        <DxDataGridColumn Field="@nameof(Employee.UserName)" />
+        <DxDataGridSpinEditColumn Field="@nameof(Employee.Salary)" Caption="Gehalt" TextAlignment="@DataGridTextAlign.Left" Width="100px" />
+        <DxDataGridColumn Field="@nameof(Employee.Profession)" />
+    </DxDataGrid>
 
 <p>Diese Ansicht ist nur für die erste alpha version so gestaltet um das wesentliche zu testen.</p>
 <br/>
@@ -32,4 +42,9 @@
     {
         employees((await repository.GetListAsync()).ToList());
     }
+
+    // for devexpress grid test purpose
+    public Employee Employee { get; set; }
+
+    readonly ObservableCollection<Employee> employees = new ObservableCollection<Employee>();
 }
