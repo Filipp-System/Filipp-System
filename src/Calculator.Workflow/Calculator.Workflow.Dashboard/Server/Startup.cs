@@ -6,8 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using Elsa.Activities.Email.Extensions;
 using Elsa.Activities.Http.Extensions;
 using Elsa.Activities.Timers.Extensions;
+using Elsa.Dashboard.Extensions;
+using Elsa.Persistence.EntityFrameworkCore.DbContexts;
 using Elsa.Persistence.EntityFrameworkCore.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,19 +23,21 @@ namespace Calculator.Workflow.Dashboard.Server
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddElsa(elsa =>
-                    elsa.AddEntityFrameworkStores(options =>
-                        options.UseSqlite(Configuration["ElsaDataSource"])));
-            services.AddHttpActivities()
-                .AddTimerActivities();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddElsa(elsa =>
+                    elsa.AddEntityFrameworkStores<SqliteContext>(options =>
+                        options.UseSqlite(Configuration.GetConnectionString("WorkflowDataSource"))))
+                .AddHttpActivities(options => options.Bind(Configuration.GetSection("Workflow:Http")))
+                .AddEmailActivities(options => options.Bind(Configuration.GetSection("Workflow:Smtp")))
+                .AddTimerActivities(options => options.Bind(Configuration.GetSection("Workflow:Timers")))
+                .AddElsaDashboard();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

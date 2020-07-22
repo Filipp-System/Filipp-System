@@ -5,54 +5,58 @@
     </button>
 </div>
 
-<div id="header" class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-dark border-bottom shadow-sm">
-    <h5 class="my-0 mr-md-auto font-weight-normal">Calculator Workflow Designer</h5>
 
-
-    <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-        <ul class="nav">
-            <li class="nav-item">
-                <button class="btn btn-primary" onclick="addActivity()">Add Activity</button>
-            </li>
-            <li class="nav-item">
-                <wf-export-button workflow-designer-host="designerHost"></wf-export-button>
-            </li>
-            <li class="nav-item">
-                <button class="btn btn-secondary" onclick="importWorkflow()">Import</button>
-            </li>
-            <li class="nav-item">
-                <button class="btn btn-secondary" onclick="createNewWorkflow()">New Workflow</button>
-            </li>
-        </ul>
-    </div>
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav">
+        <li class="nav-item">
+            <button class="btn btn-primary" @onclick="AddActivity">Add Activity</button>
+        </li>
+        <li class="nav-item">
+            <wf-export-button workflow-designer-host="@DesignerHost"></wf-export-button>
+        </li>
+        <li class="nav-item">
+            <button class="btn btn-secondary" @onclick="ImportWorkflow">Import</button>
+        </li>
+        <li class="nav-item">
+            <button class="btn btn-secondary" @onclick="CreateNewWorkflow">New Workflow</button>
+        </li>
+    </ul>
 </div>
 
-
-<script type="text/javascript">
-    const designer = document.querySelector("#designeHost");
-    
-    function addActivity() {
-      designer.showActivityPicker();
-    }
-    
-    function createNewWorkflow() {
-       if(confirm('T? R U SRSLY WANNA DISCARD THUZZZ CHANGES? PLX SINK TWU TAIMS PLX!'))
-           designer.newWorkflow();
-    }
-    
-    function importWorkflow() {
-      designer.import();
-    }
-</script>
 
 @code {
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private object _designer = DesignerHost;
 
+    
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
+    
+    //     const designer = document.querySelector("#designerHost");
+    //
+    // function addActivity() {
+    //     designer.showActivityPicker();
+    // }
+    //
+    // function createNewWorkflow() {
+    //     if (confirm('T? R U SRSLY WANNA DISCARD THUZZZ CHANGES? PLX SINK TWU TAIMS PLX!'))
+    //         designer.newWorkflow();
+    // }
+    //
+    // function importWorkflow() {
+    //     designer.import();
+    // }
+
+
+    private void AddActivity()
+    {
+        throw new NotImplementedException();
+    }
+    
+    private static object DesignerHost {get; set; }
 
 }
