@@ -8,11 +8,12 @@
 
 @attribute [Authorize]
 
-<ListControl Page="Page" FetchEmployeeAsync="(repository, employees) => FetchAsync(repository, employees)" />
 
 <p>Diese Ansicht ist nur für die erste alpha version so gestaltet um das wesentliche zu testen.</p>
 <br/>
 <p>Hier wird das Dashboard zukünftig sein.</p>
+
+<ListControl Page="Page" FetchEmployeeAsync="(repository, employees) => FetchAsync(repository, employees)" />
 
 @code
 {
