@@ -21,11 +21,4 @@
     <ProjectReference Include="..\Calculator.Model\Calculator.Model.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Content Update="EmployeeListRow.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-  </ItemGroup>
-
 </Project>
