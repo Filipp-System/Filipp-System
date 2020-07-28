@@ -16,18 +16,13 @@ namespace Calculator.Workflow.Tests
     public class CreateCalculationTests
     {
         private readonly FilippSystemContext _filippSystemContext;
-        private readonly IBasicRepository<Calculation> _calculationRepository;
-
         private readonly UnitOfWork<FilippSystemContext, Calculation> _unitOfWork;
+        private DbContextOptions<FilippSystemContext> _contextOptions;
         public CreateCalculationTests(IBasicRepository<Calculation> calculationRepository, UnitOfWork<FilippSystemContext, Calculation> unitOfWork)
         {
-            _calculationRepository = calculationRepository;
             _unitOfWork = unitOfWork;
-            var contextOptions = new DbContextOptionsBuilder<FilippSystemContext>()
+            _contextOptions = new DbContextOptionsBuilder<FilippSystemContext>()
                 .UseSqlite("Filename=Calculation-Test.db").Options;
-
-            _filippSystemContext = new FilippSystemContext(contextOptions);
-            
         }
         
         [Fact]
@@ -35,15 +30,19 @@ namespace Calculator.Workflow.Tests
         {
             // Arrange
 
-            var testController = new CalculationController(_calculationRepository);
+            
             var testCalculationId = 1;
-
-            var calculation = _unitOfWork.Repository.LoadAsync(testCalculationId, _filippSystemContext.User);
+            
             // Act
+            using (var context = new FilippSystemContext(_contextOptions))
+            {
+                var testController = new CalculationController(_unitOfWork.Repository);
+                var calculation = testController.GetCalculation(testCalculationId);
+            }
             //var result = testController.GetCalculation(testCalculationId);
 
             // Assert
-            Assert.Equal(testCalculationId, calculation.Result.CalculationID);
+            Assert.Equal(testCalculationId, result);
         }
     }
 }

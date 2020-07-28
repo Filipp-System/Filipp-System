@@ -15,10 +15,12 @@ namespace Calculator.Server.Controllers
     public class CalculationController : ControllerBase
     {
         private readonly IBasicRepository<Calculation> _repository;
+        private readonly IServiceProvider _serviceProvider;
 
-        public CalculationController(IBasicRepository<Calculation> repository)
+        public CalculationController(IBasicRepository<Calculation> repository, IServiceProvider serviceProvider)
         {
             _repository = repository;
+            _serviceProvider = serviceProvider;
         }
 
         public async Task<IActionResult> GetCalculation(int calculationId)
