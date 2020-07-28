@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Security.Claims;
 using Calculator.BaseRepository;
-using Calculator.Model;
+using Calculator.Models;
+using Calculator.Models.DatabaseModels;
 using Task = System.Threading.Tasks.Task;
 
 namespace Calculator.Client.Data
@@ -9,27 +10,27 @@ namespace Calculator.Client.Data
     public class WasmUnitOfWork : IUnitOfWork<Employee>
     {
         /// <summary>
-        /// The <see cref="Employee"/> being edited.
+        /// The <see cref="Calculator.Models.DatabaseModels.Calculation"/> being edited.
         /// </summary>
-        public Employee OriginalEmployee => _repository.OriginalEmployee;
+        public Employee OriginalCalculation => _repository.OriginalCalculation;
 
         /// <summary>
-        /// The <see cref="Employee"/> that is in the database.
+        /// The <see cref="Calculator.Models.DatabaseModels.Calculation"/> that is in the database.
         /// </summary>
-        public Employee DatabaseEmployee => _repository.DatabaseEmployee;
+        public Employee DatabaseCalculation => _repository.DatabaseCalculation;
 
         /// <summary>
         /// True if there is a conflict (only exists if that happens).
         /// </summary>
-        public bool HasConcurrencyConflict => _repository.DatabaseEmployee != null;
+        public bool HasConcurrencyConflict => _repository.DatabaseCalculation != null;
 
         /// <summary>
-        /// The version of the last read <see cref="Employee"/>.
+        /// The version of the last read <see cref="Calculator.Models.DatabaseModels.Calculation"/>.
         /// </summary>
         public byte[] RowVersion { get; set; }
 
         /// <summary>
-        /// Expose the <see cref="IBasicRepository{Employee}"/> interface.
+        /// Expose the <see cref="IBasicRepository{Calculation}"/> interface.
         /// </summary>
         public IBasicRepository<Employee> Repository => _repository;
 
@@ -41,7 +42,7 @@ namespace Calculator.Client.Data
         /// <summary>
         /// Creates a new instance of the <see cref="WasmUnitOfWork"/> class.
         /// </summary>
-        /// <param name="repository">The <see cref="IBasicRepository{Employee}"/> implementation.</param>
+        /// <param name="repository">The <see cref="IBasicRepository{Calculation}"/> implementation.</param>
         public WasmUnitOfWork(IBasicRepository<Employee> repository)
         {
             _repository = repository as WasmRepository;
@@ -53,7 +54,7 @@ namespace Calculator.Client.Data
         /// <returns>A <see cref="Task"/>.</returns>
         public Task CommitAsync()
         {
-            return Repository.UpdateAsync(OriginalEmployee, null);
+            return Repository.UpdateAsync(OriginalCalculation, null);
         }
 
         /// <summary>

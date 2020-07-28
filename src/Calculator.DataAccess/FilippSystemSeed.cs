@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using Calculator.Model;
+using System.Threading.Tasks;
+using Calculator.Models.DatabaseModels;
 
 namespace Calculator.DataAccess
 {
@@ -10,9 +11,9 @@ namespace Calculator.DataAccess
     /// </summary>
     public class FilippSystemSeed
     {
-        private readonly DbContextFactory<EmployeeContext> _factory;
+        private readonly DbContextFactory<FilippSystemContext> _factory;
 
-        public FilippSystemSeed(DbContextFactory<EmployeeContext> factory)
+        public FilippSystemSeed(DbContextFactory<FilippSystemContext> factory)
         {
             _factory = factory;
         }
@@ -45,7 +46,7 @@ namespace Calculator.DataAccess
         };
 
         private readonly string[] _professions = {
-            "Software-Architekt", "Ingenieur", "Mauermeister", "Vertriebler", "Lager und Transportmitarbeiter",
+            "Software-Architekt", "Ingenieur", "Mauermeister", "Vertrieb", "Lager und Transportmitarbeiter",
             "Elektroniker/in - Maschinen und Antriebstechnik",
             "Technische/r Systemplaner/in", "Geomatiker/in", "Mechatroniker/in - Kältetechnik", "UX Designer"
         };
@@ -93,9 +94,9 @@ namespace Calculator.DataAccess
         /// </summary>
         /// <param name="user">The logged in <see cref="ClaimsPrincipal"/>.</param>
         /// <returns>A <see cref="System.Threading.Tasks.Task"/></returns>
-        public async System.Threading.Tasks.Task CheckAndSeedDatabaseAsync(ClaimsPrincipal user)
+        public async Task CheckAndSeedDatabaseAsync(ClaimsPrincipal user)
         {
-            using (var context = _factory.CreateDbContext())
+            await using (var context = _factory.CreateDbContext())
             {
                 context.User = user;
                 var created = await context.Database.EnsureCreatedAsync();
@@ -109,10 +110,10 @@ namespace Calculator.DataAccess
         /// <summary>
         /// Generate random <see cref="Employee"/> instances and batch insert.
         /// </summary>
-        /// <param name="context">The <see cref="EmployeeContext"/> to use.</param>
+        /// <param name="context">The <see cref="Calculator.DataAccess.FilippSystemContext"/> to use.</param>
         /// <param name="totalCount">The count of employees to generate.</param>
         /// <returns>A <see cref="System.Threading.Tasks.Task"/></returns>
-        private async System.Threading.Tasks.Task SeedDatabaseWithEmployeeCountOfAsync(EmployeeContext context, int totalCount)
+        private async Task SeedDatabaseWithEmployeeCountOfAsync(FilippSystemContext context, int totalCount)
         {
             var count = 0;
             var currentCycle = 0;

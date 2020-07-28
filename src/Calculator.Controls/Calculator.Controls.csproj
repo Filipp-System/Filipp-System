@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Calculator.BaseRepository\Calculator.BaseRepository.csproj" />
-    <ProjectReference Include="..\Calculator.Model\Calculator.Model.csproj" />
+    <ProjectReference Include="..\Calculator.Model\Calculator.Models.csproj" />
   </ItemGroup>
 
 </Project>

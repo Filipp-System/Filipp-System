@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Calculator.BaseRepository;
 using Calculator.Client.Data;
 using Calculator.DataAccess;
-using Calculator.Model;
+using Calculator.Models;
+using Calculator.Models.DatabaseModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -58,7 +59,7 @@ namespace Calculator.Server.Controllers
                     OriginalEmployee = result,
                     RowVersion = result == null
                         ? null
-                        : await unitOfWork.Repository.GetPropertyValueAsync<byte[]>(result, EmployeeContext.RowVersion)
+                        : await unitOfWork.Repository.GetPropertyValueAsync<byte[]>(result, FilippSystemContext.RowVersion)
                 };
                 return new OkObjectResult(concurrencyResult);
             }
@@ -108,7 +109,7 @@ namespace Calculator.Server.Controllers
                 // get the employee on the board for EF Core
                 unitOfWork.Repository.Attach(value.OriginalEmployee);
                 await unitOfWork.Repository.SetOriginalValueForConcurrencyAsync(
-                    value.OriginalEmployee, EmployeeContext.RowVersion, value.RowVersion);
+                    value.OriginalEmployee, FilippSystemContext.RowVersion, value.RowVersion);
                 try
                 {
                     await unitOfWork.CommitAsync();

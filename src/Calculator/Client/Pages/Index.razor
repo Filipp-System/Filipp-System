@@ -3,7 +3,8 @@
 
 @using Microsoft.AspNetCore.Authorization
 @using Calculator.BaseRepository
-@using Calculator.Model
+@using Calculator.Models
+@using Calculator.Models.DatabaseModels
 @using Task = System.Threading.Tasks.Task
 
 @attribute [Authorize]
@@ -13,7 +14,7 @@
 <br/>
 <p>Hier wird das Dashboard zukünftig sein.</p>
 
-@*<ListControl Page="Page" FetchEmployeeAsync="(repository, employees) => FetchAsync(repository, employees)" />*@
+@*<ListControl Page="Page" FetchCalculationAsync="(repository, calculations) => FetchAsync(repository, calculations)" />*@
 
 @code
 {
@@ -26,8 +27,8 @@
     /// <summary>
     /// Pass in the actual work so this can be reused between client and server
     /// </summary>
-    /// <param name="repository">The <see cref="IBasicRepository{Employee}"/> to use.</param>
-    /// <param name="employees">How to handle the returned <see cref="ICollection{Employee}"/>.</param>
+    /// <param name="repository">The <see cref="IBasicRepository{Calculation}"/> to use.</param>
+    /// <param name="employees">How to handle the returned <see cref="ICollection{Calculation}"/>.</param>
     /// <returns>A <see cref="System.Threading.Tasks.Task"/></returns>
     public async Task FetchAsync(IBasicRepository<Employee> repository, Action<ICollection<Employee>> employees)
     {

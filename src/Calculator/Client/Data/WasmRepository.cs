@@ -7,13 +7,14 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Calculator.BaseRepository;
-using Calculator.Model;
+using Calculator.Models;
+using Calculator.Models.DatabaseModels;
 using Task = System.Threading.Tasks.Task;
 
 namespace Calculator.Client.Data
 {
     /// <summary>
-    /// Client implementation of the <see cref="IBasicRepository{Employee}"/>.
+    /// Client implementation of the <see cref="IBasicRepository{Calculation}"/>.
     /// </summary>
     public class WasmRepository : IBasicRepository<Employee>
     {
@@ -26,17 +27,17 @@ namespace Calculator.Client.Data
         private string ForUpdate => "?forUpdate=true";
 
         /// <summary>
-        /// Employee as loaded then modified by the user.
+        /// Calculation as loaded then modified by the user.
         /// </summary>
-        public Employee OriginalEmployee { get; set; }
+        public Employee OriginalCalculation { get; set; }
 
         /// <summary>
-        /// Employee on the database
+        /// Calculation on the database
         /// </summary>
-        public Employee DatabaseEmployee { get; set; }
+        public Employee DatabaseCalculation { get; set; }
 
         /// <summary>
-        /// The row version of the last employee loaded.
+        /// The row version of the last calculation loaded.
         /// </summary>
         public byte[] RowVersion { get; set; }
 
@@ -71,9 +72,9 @@ namespace Calculator.Client.Data
         }
 
         /// <summary>
-        /// Gets a page of <see cref="Employee"/> items.
+        /// Gets a page of <see cref="Calculator.Models.DatabaseModels.Calculation"/> items.
         /// </summary>
-        /// <returns>The result <see cref="ICollection{Employee}"/>.</returns>
+        /// <returns>The result <see cref="ICollection{Calculation}"/>.</returns>
         public async Task<ICollection<Employee>> GetListAsync()
         {
             var result = await _apiClient.PostAsJsonAsync(ApiQuery, _controls);
@@ -85,9 +86,9 @@ namespace Calculator.Client.Data
         }
 
         /// <summary>
-        /// Load an <see cref="Employee"/>.
+        /// Load an <see cref="Calculator.Models.DatabaseModels.Calculation"/>.
         /// </summary>
-        /// <param name="id">The id of the <see cref="Employee"/> to load.</param>
+        /// <param name="id">The id of the <see cref="Calculator.Models.DatabaseModels.Calculation"/> to load.</param>
         /// <param name="_">Unused <see cref="ClaimsPrincipal"/>.</param>
         /// <param name="forUpdate"><c>True</c> when concurrency information should be loaded.</param>
         /// <returns></returns>
@@ -102,14 +103,14 @@ namespace Calculator.Client.Data
         }
 
         /// <summary>
-        /// Load an <see cref="Employee"/> for updates.
+        /// Load an <see cref="Calculator.Models.DatabaseModels.Calculation"/> for updates.
         /// </summary>
-        /// <param name="id">The id of the <see cref="Employee"/> to load.</param>
+        /// <param name="id">The id of the <see cref="Calculator.Models.DatabaseModels.Calculation"/> to load.</param>
         /// <returns></returns>
         public async Task<Employee> LoadAsync(int id)
         {
-            OriginalEmployee = null;
-            DatabaseEmployee = null;
+            OriginalCalculation = null;
+            DatabaseCalculation = null;
             RowVersion = null;
 
             var result = await SafeGetFromJsonAsync<EmployeeConcurrencyResolver>($"{ApiEmployees}{id}{ForUpdate}");
@@ -120,18 +121,18 @@ namespace Calculator.Client.Data
             }
 
             // our instance
-            OriginalEmployee = result.OriginalEmployee;
+            OriginalCalculation = result.OriginalCalculation;
 
             // save the version
             RowVersion = result.RowVersion;
 
-            return result.OriginalEmployee;
+            return result.OriginalCalculation;
         }
 
         /// <summary>
-        /// Delete an <see cref="Employee"/>.
+        /// Delete an <see cref="Calculator.Models.DatabaseModels.Calculation"/>.
         /// </summary>
-        /// <param name="id">The id of the <see cref="Employee"/>.</param>
+        /// <param name="id">The id of the <see cref="Calculator.Models.DatabaseModels.Calculation"/>.</param>
         /// <param name="user">The logged in <see cref="ClaimsPrincipal"/>.</param
         /// <returns><c>True</c> when successfully deleted.</returns>
         public async Task<bool> DeleteAsync(int id, ClaimsPrincipal user)
@@ -157,11 +158,11 @@ namespace Calculator.Client.Data
         }
 
         /// <summary>
-        /// Add an employee
+        /// Add an calculation
         /// </summary>
-        /// <param name="item">The <see cref="Employee"/> to add.</param>
+        /// <param name="item">The <see cref="Calculator.Models.DatabaseModels.Calculation"/> to add.</param>
         /// <param name="user">The logged in <see cref="ClaimsPrincipal"/>.</param>
-        /// <returns>The added <see cref="Employee"/>.</returns>
+        /// <returns>The added <see cref="Calculator.Models.DatabaseModels.Calculation"/>.</returns>
         public async Task<Employee> AddAsync(Employee item, ClaimsPrincipal user)
         {
             var result = await _apiClient.PostAsJsonAsync(ApiEmployees, item);
@@ -169,14 +170,14 @@ namespace Calculator.Client.Data
         }
 
         /// <summary>
-        /// Update an <see cref="Employee"/> with concurrency checks.
+        /// Update an <see cref="Calculator.Models.DatabaseModels.Calculation"/> with concurrency checks.
         /// </summary>
-        /// <param name="item">The <see cref="Employee"/> to update.</param>
+        /// <param name="item">The <see cref="Calculator.Models.DatabaseModels.Calculation"/> to update.</param>
         /// <param name="user">The <see cref="ClaimsPrincipal"/>.</param>
-        /// <returns>The updated <see cref="Employee"/>.</returns>
+        /// <returns>The updated <see cref="Calculator.Models.DatabaseModels.Calculation"/>.</returns>
         public async Task<Employee> UpdateAsync(Employee item, ClaimsPrincipal user)
         {
-            // send down the employee with the version that have been tracked
+            // send down the calculation with the version that have been tracked
             var result = await _apiClient.PutAsJsonAsync($"{ApiEmployees}{item.EmployeeID}", item.ToConcurrencyResolver(this));
             if (result.IsSuccessStatusCode)
             {
@@ -187,10 +188,10 @@ namespace Calculator.Client.Data
             {
                 // concurrency issue, extract what the updated information is
                 var resolver = await result.Content.ReadFromJsonAsync<EmployeeConcurrencyResolver>();
-                DatabaseEmployee = resolver.DatabaseEmployee;
+                DatabaseCalculation = resolver.DatabaseCalculation;
                 var exception = new RepositoryConcurrencyException<Employee>(item, new Exception())
                 {
-                    DbEntity = resolver.DatabaseEmployee
+                    DbEntity = resolver.DatabaseCalculation
                 };
                 RowVersion = resolver.RowVersion;
                 throw exception;

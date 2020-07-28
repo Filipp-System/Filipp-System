@@ -7,7 +7,7 @@ namespace Calculator.BaseRepository
     /// <summary>
     /// A unit of work. Implies a context will persist beyond a single operation.
     /// </summary>
-    public interface IUnitOfWork<TEntity> : IDisposable
+    public interface IUnitOfWork<TEntity> : IDisposable 
     {
         /// <summary>
         /// The repository related to the unit of work.

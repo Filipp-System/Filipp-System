@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Calculator.Model;
+using Calculator.Models;
 
 namespace Calculator.Controls.Grid
 {

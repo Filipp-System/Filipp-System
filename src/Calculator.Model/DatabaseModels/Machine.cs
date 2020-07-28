@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Calculator.Model
+namespace Calculator.Models.DatabaseModels
 {
     public class Machine
     {

@@ -1,4 +1,4 @@
-﻿using Calculator.Model;
+﻿using Calculator.Models.DatabaseModels;
 
 namespace Calculator.Client.Data
 {

@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Claims;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Calculator.Model;
+using Calculator.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Calculator.DataAccess
 {
-    public class EmployeeContext : DbContext, ISupportUser
+    public class FilippSystemContext : DbContext, ISupportUser
     {
         /// <summary>
         /// Tracking lifetime of context
@@ -20,7 +17,7 @@ namespace Calculator.DataAccess
         /// <summary>
         /// For calculator info
         /// </summary>
-        private readonly FilippSystemEmployeeAdapter _adapter = new FilippSystemEmployeeAdapter();
+        //private readonly FilippSystemAdapter _adapter = new FilippSystemAdapter();
 
         /// <summary>
         /// The logged in <see cref="ClaimsPrincipal"/>
@@ -61,10 +58,10 @@ namespace Calculator.DataAccess
         /// <summary>
         /// Inject options
         /// </summary>
-        /// <param name="options">The <see cref="DbContextOptions{EmployeeContext}"/>
+        /// <param name="options">The <see cref="DbContextOptions{FilippSystemContext}"/>
         /// for the context.
         /// </param>
-        public EmployeeContext(DbContextOptions<EmployeeContext> options) 
+        public FilippSystemContext(DbContextOptions<FilippSystemContext> options)
             : base(options)
         {
             _id = Guid.NewGuid();
@@ -76,18 +73,40 @@ namespace Calculator.DataAccess
         /// </summary>
         /// <param name="cancellationToken">The <seealso cref="CancellationToken"/>.</param>
         /// <returns>The result.</returns>
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            return await _adapter.ProcessEmployeeChangesAsync(
-                User, this, async () => await base.SaveChangesAsync(cancellationToken));
-        }
+        //public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        //{
+        //    return await _adapter.ProcessFilippSystemChangesAsync(
+        //        User, this, async () => await base.SaveChangesAsync(cancellationToken));
+        //}
 
         /// <summary>
-        /// List of <see cref="Employee"/>
+        /// List of <see cref="Calculator.Models.DatabaseModels.Calculation"/>
+        /// </summary>
+        public DbSet<Calculation> Calculations { get; set; }
+
+        /// <summary>
+        /// List of <see cref="CalculationTask"/>
+        /// </summary>
+        public DbSet<CalculationTask> CalculationTasks { get; set; }
+
+        /// <summary>
+        /// List of <see cref="Employees"/>
         /// </summary>
         public DbSet<Employee> Employees { get; set; }
 
-        public DbSet<FilippSystemEmployee> FilippSystemEmployees { get; set; }
+        /// <summary>
+        /// List of <see cref="Machine"/>
+        /// </summary>
+        public DbSet<Machine> Machines { get; set; }
+
+        /// <summary>
+        /// List of <see cref="Material"/>
+        /// </summary>
+        public DbSet<Material> Materials { get; set; }
+
+        public DbSet<FilippSystemApplicationInformation> FilippSystemApplicationInformation { get; set; }
+
+        
 
         /// <summary>
         /// Define the model.
@@ -95,17 +114,17 @@ namespace Calculator.DataAccess
         /// <param name="modelBuilder">The <see cref="ModelBuilder"/>.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var employee = modelBuilder.Entity<Employee>();
+            var filippSystemApplicationInformation = modelBuilder.Entity<FilippSystemApplicationInformation>();
 
             // this property isn't on the c# class
             // so we set it up as a "shadow" property and use it for concurrency
-            employee.Property<byte[]>(RowVersion).IsRowVersion();
+            filippSystemApplicationInformation.Property<byte[]>(RowVersion).IsRowVersion();
 
             // FilippSystem fields
-            employee.Property<string>(ModifiedBy);
-            employee.Property<DateTimeOffset>(ModifiedOn);
-            employee.Property<string>(CreatedBy);
-            employee.Property<DateTimeOffset>(CreatedOn);
+            filippSystemApplicationInformation.Property<string>(ModifiedBy);
+            filippSystemApplicationInformation.Property<DateTimeOffset>(ModifiedOn);
+            filippSystemApplicationInformation.Property<string>(CreatedBy);
+            filippSystemApplicationInformation.Property<DateTimeOffset>(CreatedOn);
 
             base.OnModelCreating(modelBuilder);
         }

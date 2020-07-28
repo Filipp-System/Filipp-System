@@ -1,17 +1,16 @@
 using System;
 using AspNetCore.Identity.MongoDbCore.Extensions;
 using AspNetCore.Identity.MongoDbCore.Infrastructure;
+using Calculator.BaseRepository;
+using Calculator.DataAccess;
+using Calculator.Models.DatabaseModels;
+using Calculator.Repository;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Calculator.BaseRepository;
-using Calculator.DataAccess;
-using Calculator.Model;
-using Calculator.Repository;
 using Calculator.Server.Models;
 using Calculator.Server.UserSettings;
 using Microsoft.AspNetCore.Identity;
@@ -92,18 +91,18 @@ namespace Calculator.Server
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            //services.AddDbContextFactory<EmployeeContext>(opt =>
-            //    opt.UseSqlite(Configuration.GetConnectionString(EmployeeContext.BlazorFilippSystemDb))
+            //services.AddDbContextFactory<FilippSystemContext>(opt =>
+            //    opt.UseSqlite(Configuration.GetConnectionString(FilippSystemContext.BlazorFilippSystemDb))
             //        .EnableSensitiveDataLogging());
 
-            // add the repository
-            //services.AddScoped<IRepository<Employee, EmployeeContext>, EmployeeRepository>();
-            //services.AddScoped<IBasicRepository<Employee>>(sp =>
-            //    sp.GetService<IRepository<Employee, EmployeeContext>>());
-            //services.AddScoped<IUnitOfWork<Employee>, UnitOfWork<EmployeeContext, Employee>>();
+            //add the repository
+            services.AddScoped<IRepository<Calculation, FilippSystemContext>, CalculationRepository>();
+            services.AddScoped<IBasicRepository<Calculation>>(sp =>
+                sp.GetService<IRepository<Calculation, FilippSystemContext>>());
+            services.AddScoped<IUnitOfWork<Calculation>, UnitOfWork<FilippSystemContext, Calculation>>();
 
-            //// seeding the first time
-            //services.AddScoped<FilippSystemSeed>();
+            // seeding the first time
+            services.AddScoped<FilippSystemSeed>();
 
 
 

@@ -5,32 +5,33 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Calculator.DataAccess;
-using Calculator.Model;
+using Calculator.Models;
+using Calculator.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 using Task = System.Threading.Tasks.Task;
 
 namespace Calculator.Repository
 {
-    public class EmployeeRepository : IRepository<Employee, EmployeeContext>
+    public class CalculationRepository : IRepository<Calculation, FilippSystemContext>
     {
         /// <summary>
         /// Factory to create contexts.
         /// </summary>
-        private readonly DbContextFactory<EmployeeContext> _factory;
-        private bool disposedValue;
+        private readonly DbContextFactory<FilippSystemContext> _factory;
+        private bool _disposedValue;
 
         /// <summary>
         /// For longer tracked work.
         /// </summary>
-        public EmployeeContext PersistedContext { get; set; }
+        public FilippSystemContext PersistedContext { get; set; }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="EmployeeRepository"/> class.
+        /// Creates a new instance of the <see cref="CalculationRepository"/> class.
         /// </summary>
         /// <param name="factory">
-        /// The <see cref="DbContextFactory{EmployeeContext}"/> to use.
+        /// The <see cref="DbContextFactory{FilippSystemContext}"/> to use.
         /// </param>
-        public EmployeeRepository(DbContextFactory<EmployeeContext> factory)
+        public CalculationRepository(DbContextFactory<FilippSystemContext> factory)
         {
             _factory = factory;
         }
@@ -39,12 +40,12 @@ namespace Calculator.Repository
         /// Performs some work, either using the persisted context or
         /// by generating a new context for the operation.
         /// </summary>
-        /// <param name="work">The work to perform (passed a <see cref="EmployeeContext"/>).</param>
+        /// <param name="work">The work to perform (passed a <see cref="Calculator.DataAccess.FilippSystemContext"/>).</param>
         /// <param name="user">The current <see cref="ClaimsPrincipal"/>.</param>
         /// <param name="saveChanges"><c>True</c> to save changes when done.</param>
         /// <returns></returns>
         private async Task WorkInContextAsync(
-            Func<EmployeeContext, Task> work,
+            Func<FilippSystemContext, Task> work,
             ClaimsPrincipal user,
             bool saveChanges = false)
         {
@@ -73,10 +74,10 @@ namespace Calculator.Repository
         }
 
         /// <summary>
-        /// Attaches an item to the <see cref="EmployeeContext"/>
+        /// Attaches an item to the <see cref="Calculator.DataAccess.FilippSystemContext"/>
         /// </summary>
-        /// <param name="item">The instance of the <see cref="Employee"/>.</param>
-        public void Attach(Employee item)
+        /// <param name="item">The instance of the <see cref="Calculator.Models.DatabaseModels.Calculation"/>.</param>
+        public void Attach(Calculation item)
         {
             if (PersistedContext == null)
             {
@@ -87,25 +88,25 @@ namespace Calculator.Repository
         }
 
         /// <summary>
-        /// Add a new <see cref="Employee"/>
+        /// Add a new <see cref="Calculator.Models.DatabaseModels.Calculation"/>
         /// </summary>
-        /// <param name="item">The <see cref="Employee"/> to add.</param>
+        /// <param name="item">The <see cref="Calculator.Models.DatabaseModels.Calculation"/> to add.</param>
         /// <param name="user">The logged in <see cref="ClaimsPrincipal"/>.</param>
-        /// <returns>The <see cref="Employee"/> with id set.</returns>
-        public async Task<Employee> AddAsync(Employee item, ClaimsPrincipal user)
+        /// <returns>The <see cref="Calculator.Models.DatabaseModels.Calculation"/> with id set.</returns>
+        public async Task<Calculation> AddAsync(Calculation item, ClaimsPrincipal user)
         {
             await WorkInContextAsync(context =>
             {
-                context.Employees.Add(item);
+                context.Calculations.Add(item);
                 return Task.CompletedTask;
             }, user, true);
             return item;
         }
 
         /// <summary>
-        /// Delete a <see cref="Employee"/>.
+        /// Delete a <see cref="Calculator.Models.DatabaseModels.Calculation"/>.
         /// </summary>
-        /// <param name="id">Id of the <see cref="Employee"/> to delete.</param>
+        /// <param name="id">Id of the <see cref="Calculator.Models.DatabaseModels.Calculation"/> to delete.</param>
         /// <param name="user">The logged in <see cref="ClaimsPrincipal"/>.</param>
         /// <returns><c>True</c> when found and deleted.</returns>
         public async Task<bool> DeleteAsync(int id, ClaimsPrincipal user)
@@ -113,14 +114,14 @@ namespace Calculator.Repository
             bool? result = null;
             await WorkInContextAsync(async context =>
             {
-                var item = await context.Employees.SingleOrDefaultAsync(c => c.EmployeeID == id);
+                var item = await context.Calculations.SingleOrDefaultAsync(c => c.CalculationID == id);
                 if (item == null)
                 {
                     result = false;
                 }
                 else
                 {
-                    context.Employees.Remove(item);
+                    context.Calculations.Remove(item);
                 }
             }, user, true);
             if (!result.HasValue)
@@ -131,65 +132,66 @@ namespace Calculator.Repository
             return result.Value;
         }
 
+
         /// <summary>
         /// Not implemented here (see Blazor WebAssembly client).
         /// </summary>
         /// <returns></returns>
-        public Task<ICollection<Employee>> GetListAsync()
+        public Task<ICollection<Calculation>> GetListAsync()
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// Load a <see cref="Employee"/>.
+        /// Load a <see cref="Calculator.Models.DatabaseModels.Calculation"/>.
         /// </summary>
-        /// <param name="id">The id of the <see cref="Employee"/> to load.</param>
+        /// <param name="id">The id of the <see cref="Calculator.Models.DatabaseModels.Calculation"/> to load.</param>
         /// <param name="user">The logged in <see cref="ClaimsPrincipal"/>.</param>
         /// <param name="forUpdate"><c>True</c> to keep tracking on.</param>
-        /// <returns>The <see cref="Employee"/>.</returns>
-        public async Task<Employee> LoadAsync(int id, ClaimsPrincipal user, bool forUpdate = false)
+        /// <returns>The <see cref="Calculator.Models.DatabaseModels.Calculation"/>.</returns>
+        public async Task<Calculation> LoadAsync(int id, ClaimsPrincipal user, bool forUpdate = false)
         {
-            Employee employee = null;
+            Calculation calculation = null;
             await WorkInContextAsync(async context =>
             {
-                var employeeReference = context.Employees;
+                var calculationReference = context.Calculations;
                 if (forUpdate)
                 {
-                    employeeReference.AsNoTracking();
+                    calculationReference.AsNoTracking();
                 }
 
-                employee = await employeeReference.SingleOrDefaultAsync(c => c.EmployeeID == id);
+                calculation = await calculationReference.SingleOrDefaultAsync(c => c.CalculationID == id);
             }, user);
-            return employee;
+            return calculation;
         }
 
         /// <summary>
-        /// Query the <see cref="Employee"/> database.
+        /// Query the <see cref="Calculator.Models.DatabaseModels.Calculation"/> database.
         /// </summary>
         /// <param name="query">
-        /// A delegate that provides an <see cref="IQueryable{Employee}"/>
+        /// A delegate that provides an <see cref="IQueryable{Calculation}"/>
         /// to build on.
         /// </param>
         /// <returns>A <see cref="Task"/></returns>
-        public async Task QueryAsync(Func<IQueryable<Employee>, Task> query)
+        public async Task QueryAsync(Func<IQueryable<Calculation>, Task> query)
         {
             await WorkInContextAsync(async context =>
             {
-                await query(context.Employees.AsNoTracking().AsQueryable());
+                await query(context.Calculations.AsNoTracking().AsQueryable());
             }, null);
         }
 
         /// <summary>
-        /// Update the <see cref="Employee"/> (without a unit of work).
+        /// Update the <see cref="Calculator.Models.DatabaseModels.Calculation"/> (without a unit of work).
         /// </summary>
-        /// <param name="item">The <see cref="Employee"/> to update.</param>
+        /// <param name="item">The <see cref="Calculator.Models.DatabaseModels.Calculation"/> to update.</param>
         /// <param name="user">The logged in <see cref="ClaimsPrincipal"/>.</param>
-        /// <returns>The updated <see cref="Employee"/>.</returns>
-        public async Task<Employee> UpdateAsync(Employee item, ClaimsPrincipal user)
+        /// <returns>The updated <see cref="Calculator.Models.DatabaseModels.Calculation"/>.</returns>
+        public async Task<Calculation> UpdateAsync(Calculation item, ClaimsPrincipal user)
         {
             await WorkInContextAsync(context =>
             {
-                context.Employees.Attach(item);
+                context.Calculations.Attach(item);
                 return Task.CompletedTask;
             }, user, true);
             return item;
@@ -199,10 +201,10 @@ namespace Calculator.Repository
         /// Grabs the value of a property. Useful for shadow properties.
         /// </summary>
         /// <typeparam name="TPropertyType">The type of the property.</typeparam>
-        /// <param name="item">The <see cref="Employee"/> the property is on.</param>
+        /// <param name="item">The <see cref="Calculator.Models.DatabaseModels.Calculation"/> the property is on.</param>
         /// <param name="propertyName">The name of the property.</param>
         /// <returns>The value of the property.</returns>
-        public async Task<TPropertyType> GetPropertyValueAsync<TPropertyType>(Employee item, string propertyName)
+        public async Task<TPropertyType> GetPropertyValueAsync<TPropertyType>(Calculation item, string propertyName)
         {
             TPropertyType value = default;
             await WorkInContextAsync(context =>
@@ -218,11 +220,11 @@ namespace Calculator.Repository
         /// disconnected entities and are re-attaching to update.
         /// </summary>
         /// <typeparam name="TPropertyType">The type of the property.</typeparam>
-        /// <param name="item">The <see cref="Employee"/> being tracked.</param>
+        /// <param name="item">The <see cref="Calculator.Models.DatabaseModels.Calculation"/> being tracked.</param>
         /// <param name="propertyName">The name of the property.</param>
         /// <param name="value">The value to set.</param>
         /// <returns>A <see cref="Task"/>.</returns>
-        public async Task SetOriginalValueForConcurrencyAsync<TPropertyType>(Employee item, string propertyName, TPropertyType value)
+        public async Task SetOriginalValueForConcurrencyAsync<TPropertyType>(Calculation item, string propertyName, TPropertyType value)
         {
             await WorkInContextAsync(context =>
             {
@@ -241,14 +243,14 @@ namespace Calculator.Repository
         /// <param name="disposing"><c>True</c> when disposing.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
                     PersistedContext?.Dispose();
                 }
 
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 

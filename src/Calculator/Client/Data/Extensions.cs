@@ -1,5 +1,6 @@
 ﻿using Calculator.Controls.Grid;
-using Calculator.Model;
+using Calculator.Models;
+using Calculator.Models.DatabaseModels;
 
 namespace Calculator.Client.Data
 {
@@ -24,15 +25,15 @@ namespace Calculator.Client.Data
         /// <summary>
         /// Helper to transfer concurrency information from the repository to the data object.
         /// </summary>
-        /// <param name="employee">The <see cref="Employee"/> being resolved.</param>
+        /// <param name="calculationhe <see cref="Calculator.Models.DatabaseModels.Calculation"/> being resolved.</param>
         /// <param name="repository">The <see cref="WasmRepository"/> holding the concurrency values.</param>
         /// <returns>The <see cref="EmployeeConcurrencyResolver"/> instance.</returns>
-        public static EmployeeConcurrencyResolver ToConcurrencyResolver(this Employee employee,
+        public static EmployeeConcurrencyResolver ToConcurrencyResolver(this Employee calculation,
             WasmRepository repository)
         {
             return new EmployeeConcurrencyResolver()
             {
-                OriginalEmployee = employee,
+                OriginalCalculation = calculation,
                 RowVersion = repository.RowVersion
             };
         }

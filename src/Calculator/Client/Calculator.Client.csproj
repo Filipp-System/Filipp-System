@@ -37,7 +37,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Calculator.BaseRepository\Calculator.BaseRepository.csproj" />
     <ProjectReference Include="..\..\Calculator.Controls\Calculator.Controls.csproj" />
-    <ProjectReference Include="..\..\Calculator.Model\Calculator.Model.csproj" />
+    <ProjectReference Include="..\..\Calculator.Model\Calculator.Models.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
