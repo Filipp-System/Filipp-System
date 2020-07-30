@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Text;
-using Calculator.Model;
+using Calculator.Models;
+using Calculator.Models.DatabaseModels;
 
 namespace Calculator.Controls.Grid
 {

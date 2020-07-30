@@ -6,7 +6,8 @@ using System.Text;
 using Calculator.BaseRepository;
 using Calculator.Client.Data;
 using Calculator.Controls.Grid;
-using Calculator.Model;
+using Calculator.Models;
+using Calculator.Models.DatabaseModels;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -34,8 +35,8 @@ namespace Calculator.Client
             builder.Services.AddApiAuthorization();
 
             // client implementation
-            builder.Services.AddScoped<IBasicRepository<Employee>, WasmRepository>();
-            builder.Services.AddScoped<IUnitOfWork<Employee>, WasmUnitOfWork>();
+            //builder.Services.AddScoped<IBasicRepository<Employee>, WasmRepository>();
+            //builder.Services.AddScoped<IUnitOfWork<Employee>, WasmUnitOfWork>();
             
             // Add DevExpress Blazor Controls
             builder.Services.AddDevExpressBlazor();

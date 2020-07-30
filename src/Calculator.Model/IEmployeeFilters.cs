@@ -1,4 +1,4 @@
-﻿namespace Calculator.Model
+﻿namespace Calculator.Models
 {
     /// <summary>
     /// Interface for filtering

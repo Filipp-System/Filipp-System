@@ -58,7 +58,7 @@ namespace Calculator.Repository
                 else
                 {
                     // update the new row version
-                    newException.RowVersion = dbValues.GetValue<byte[]>(EmployeeContext.RowVersion);
+                    newException.RowVersion = dbValues.GetValue<byte[]>(FilippSystemContext.RowVersion);
                     // grab the database version
                     newException.DbEntity = (TEntity) dbValues.ToObject();
                     // move to original so second submit works (unless there is another concurrent edit)

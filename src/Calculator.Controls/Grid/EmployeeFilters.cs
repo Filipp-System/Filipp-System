@@ -1,4 +1,4 @@
-﻿using Calculator.Model;
+﻿using Calculator.Models;
 
 namespace Calculator.Controls.Grid
 {

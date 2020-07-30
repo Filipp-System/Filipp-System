@@ -1,30 +1,24 @@
+using System;
+using AspNetCore.Identity.MongoDbCore.Extensions;
+using AspNetCore.Identity.MongoDbCore.Infrastructure;
+using Calculator.BaseRepository;
+using Calculator.DataAccess;
+using Calculator.Models.DatabaseModels;
+using Calculator.Models.Identity;
+using Calculator.Repository;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Linq;
-using Calculator.BaseRepository;
-using Calculator.DataAccess;
-using Calculator.Model;
-using Calculator.Repository;
-using Calculator.Server.Data;
-using Calculator.Server.Models;
+using MongoDbGenericRepository;
 
 namespace Calculator.Server
 {
     public class Startup
     {
-        private static readonly string DefaultConnection =
-            nameof(DefaultConnection);
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -36,34 +30,74 @@ namespace Calculator.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationFilippSystemDbContext>(options =>
-                options.UseSqlite(
-                    Configuration.GetConnectionString("blazorfilippsystemdb")));
+            var mongoConnectionString = Configuration.GetConnectionString("MongoServer");
+            var mongoDatabase = Configuration.GetConnectionString("MongoDatabase");
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationFilippSystemDbContext>();
+            var mongoDbIdentityConfiguration = new MongoDbIdentityConfiguration
+            {
+                MongoDbSettings = new MongoDbSettings
+                {
+                    ConnectionString = mongoConnectionString,
+                    DatabaseName = mongoDatabase
+                },
+                IdentityOptionsAction = options =>
+                {
+                    // password requirements
+                    options.Password.RequireDigit = true;
+                    options.Password.RequiredLength = 8;
+                    options.Password.RequireNonAlphanumeric = true;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequireLowercase = true;
 
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationFilippSystemDbContext>();
+                    // lockout settings
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+                    options.Lockout.MaxFailedAccessAttempts = 5;
 
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
+                    // ApplicationUser settings
+                    options.User.RequireUniqueEmail = true;
+                    options.User.AllowedUserNameCharacters =
+                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
 
-            services.AddDbContextFactory<EmployeeContext>(opt =>
-                opt.UseSqlite(Configuration.GetConnectionString(EmployeeContext.BlazorFilippSystemDb))
-                    .EnableSensitiveDataLogging());
+                    // SignIn requirements
+                    options.SignIn.RequireConfirmedAccount = true;
+                }
+            };
 
-            // add the repository
-            services.AddScoped<IRepository<Employee, EmployeeContext>, EmployeeRepository>();
-            services.AddScoped<IBasicRepository<Employee>>(sp =>
-                sp.GetService<IRepository<Employee, EmployeeContext>>());
-            services.AddScoped<IUnitOfWork<Employee>, UnitOfWork<EmployeeContext, Employee>>();
+            services.ConfigureMongoDbIdentity<ApplicationUser, ApplicationRole, Guid>(mongoDbIdentityConfiguration);
+            //services.AddAuthentication()
+            //    .AddIdentityServerJwt();
+
+
+            //services.AddDbContext<ApplicationFilippSystemDbContext>(options =>
+            //    options.UseSqlite(
+            //        Configuration.GetConnectionString("DefaultConnection")));
+
+
+            //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<ApplicationFilippSystemDbContext>();
+
+            //services.AddIdentityServer()
+            //    .AddApiAuthorization<ApplicationUser, ApplicationFilippSystemDbContext>();
+
+
+
+            //services.AddDbContextFactory<FilippSystemContext>(opt =>
+            //    opt.UseSqlite(Configuration.GetConnectionString(FilippSystemContext.BlazorFilippSystemDb))
+            //        .EnableSensitiveDataLogging());
+
+            //add the repository
+            //services.AddScoped<IDbContextFactory<FilippSystemContext>, DbContextFactory<FilippSystemContext>>();
+            //services.AddScoped<IRepository<Calculation, FilippSystemContext>, CalculationRepository>();
+            //services.AddScoped<IBasicRepository<Calculation>>(sp =>
+            //    sp.GetService<IRepository<Calculation, FilippSystemContext>>());
+            //services.AddScoped<IUnitOfWork<Calculation>, UnitOfWork<FilippSystemContext, Calculation>>();
 
             // seeding the first time
-            services.AddScoped<FilippSystemSeed>();
+            //services.AddScoped<EmployeeSeed>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,7 +122,7 @@ namespace Calculator.Server
 
             app.UseRouting();
 
-            app.UseIdentityServer();
+            //app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
 
