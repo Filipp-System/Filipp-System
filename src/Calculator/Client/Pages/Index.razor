@@ -34,4 +34,9 @@
     {
         employees((await repository.GetListAsync()).ToList());
     }
+
+    // for devexpress grid test purpose
+    public Employee Employee { get; set; }
+
+    readonly ObservableCollection<Employee> employees = new ObservableCollection<Employee>();
 }

@@ -1,0 +1,44 @@
+name: FS .NET Core Workflow with SonarQube
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: "0 4 * * 1-6"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: .NET Core CLI
+      uses: baruchiro/github-actions@0.0.1
+    - name: sonarscan-dotnet
+      uses: highbyte/sonarscan-dotnet@1.0
+      with:
+        # The key of the SonarQube project
+        sonarProjectKey: filipp-system
+        # The name of the SonarQube project
+        sonarProjectName: Filipp-System
+        # The name of the SonarQube organization in SonarCloud. For hosted SonarQube, skip this setting.
+        sonarOrganization: filipp-system
+        # Optional command arguments to 'dotnet build'
+        dotnetBuildArguments: --configuration Release --no-restore
+        # Optional command arguments to 'dotnet test'
+        dotnetTestArguments: --no-restore --verbosity normal
+        # The SonarQube server URL. For SonarCloud, skip this setting.
+        sonarHostname: https://sonarcloud.io
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
