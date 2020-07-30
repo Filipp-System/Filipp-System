@@ -20,7 +20,7 @@ namespace Calculator.Models.DatabaseModels
         [Required] 
         public string Street { get; set; }
         [Required] 
-        public int HouseNumber { get; set; }
+        public string HouseNumber { get; set; }
         public string HouseNumberExtension { get; set; }
 
         [Required,

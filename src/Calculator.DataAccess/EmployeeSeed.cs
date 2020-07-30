@@ -83,7 +83,7 @@ namespace Calculator.DataAccess
                 Profession = RandomPick(_professions),
                 HouseNumber = _random.Next(1, 279).ToString(),
                 HouseNumberExtension = RandomPick(_houseExtensions),
-                ZipCode = _random.Next(10000, 99998).ToString(),
+                ZipCode = _random.Next(10000, 99998),
                 Salary = _random.Next(1200, 6500)
             };
             return employee;
