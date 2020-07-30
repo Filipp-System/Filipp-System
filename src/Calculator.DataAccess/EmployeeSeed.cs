@@ -9,11 +9,11 @@ namespace Calculator.DataAccess
     /// <summary>
     /// Generates some random test data for the application
     /// </summary>
-    public class FilippSystemSeed
+    public class EmployeeSeed
     {
         private readonly DbContextFactory<FilippSystemContext> _factory;
 
-        public FilippSystemSeed(DbContextFactory<FilippSystemContext> factory)
+        public EmployeeSeed(DbContextFactory<FilippSystemContext> factory)
         {
             _factory = factory;
         }

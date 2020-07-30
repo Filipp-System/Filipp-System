@@ -8,7 +8,7 @@ namespace Calculator.Client.Data
     /// <summary>
     /// Result from query request.
     /// </summary>
-    public class QueryResult
+    public class QueryResult<TEntity>
     {
         /// <summary>
         /// New <see cref="PageHelper"/> information.
@@ -18,6 +18,6 @@ namespace Calculator.Client.Data
         /// <summary>
         /// A page of <see cref="ICollection{Calculation}"/>.
         /// </summary>
-        public ICollection<Employee> Employees { get; set; }   
+        public ICollection<TEntity> EntityCollection { get; set; }   
     }
 }

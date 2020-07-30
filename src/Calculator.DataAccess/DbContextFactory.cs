@@ -8,7 +8,7 @@ namespace Calculator.DataAccess
     /// Factory to generate instance of <see cref="TContext"/>.
     /// </summary>
     /// <typeparam name="TContext">The <see cref="DbContext"/> type to provide.</typeparam>
-    public class DbContextFactory<TContext> where TContext : DbContext
+    public class DbContextFactory<TContext> : IDbContextFactory<TContext> where TContext : DbContext 
     {
         /// <summary>
         /// Service provider.

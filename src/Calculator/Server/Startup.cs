@@ -4,26 +4,21 @@ using AspNetCore.Identity.MongoDbCore.Infrastructure;
 using Calculator.BaseRepository;
 using Calculator.DataAccess;
 using Calculator.Models.DatabaseModels;
+using Calculator.Models.Identity;
 using Calculator.Repository;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Calculator.Server.Models;
-using Calculator.Server.UserSettings;
-using Microsoft.AspNetCore.Identity;
 using MongoDbGenericRepository;
 
 namespace Calculator.Server
 {
     public class Startup
     {
-        private static readonly string DefaultConnection =
-            nameof(DefaultConnection);
-
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -37,7 +32,6 @@ namespace Calculator.Server
         {
             var mongoConnectionString = Configuration.GetConnectionString("MongoServer");
             var mongoDatabase = Configuration.GetConnectionString("MongoDatabase");
-            var mongoDbContext = new MongoDbContext(mongoConnectionString, mongoDatabase);
 
             var mongoDbIdentityConfiguration = new MongoDbIdentityConfiguration
             {
@@ -65,17 +59,14 @@ namespace Calculator.Server
                         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
 
                     // SignIn requirements
-                    options.SignIn.RequireConfirmedEmail = true;
+                    options.SignIn.RequireConfirmedAccount = true;
                 }
             };
 
             services.ConfigureMongoDbIdentity<ApplicationUser, ApplicationRole, Guid>(mongoDbIdentityConfiguration);
+            //services.AddAuthentication()
+            //    .AddIdentityServerJwt();
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
-                .AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>(mongoDbContext)
-                .AddSignInManager()
-                .AddDefaultTokenProviders();
-                
 
             //services.AddDbContext<ApplicationFilippSystemDbContext>(options =>
             //    options.UseSqlite(
@@ -88,23 +79,21 @@ namespace Calculator.Server
             //services.AddIdentityServer()
             //    .AddApiAuthorization<ApplicationUser, ApplicationFilippSystemDbContext>();
 
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
+
 
             //services.AddDbContextFactory<FilippSystemContext>(opt =>
             //    opt.UseSqlite(Configuration.GetConnectionString(FilippSystemContext.BlazorFilippSystemDb))
             //        .EnableSensitiveDataLogging());
 
             //add the repository
-            services.AddScoped<IRepository<Calculation, FilippSystemContext>, CalculationRepository>();
-            services.AddScoped<IBasicRepository<Calculation>>(sp =>
-                sp.GetService<IRepository<Calculation, FilippSystemContext>>());
-            services.AddScoped<IUnitOfWork<Calculation>, UnitOfWork<FilippSystemContext, Calculation>>();
+            //services.AddScoped<IDbContextFactory<FilippSystemContext>, DbContextFactory<FilippSystemContext>>();
+            //services.AddScoped<IRepository<Calculation, FilippSystemContext>, CalculationRepository>();
+            //services.AddScoped<IBasicRepository<Calculation>>(sp =>
+            //    sp.GetService<IRepository<Calculation, FilippSystemContext>>());
+            //services.AddScoped<IUnitOfWork<Calculation>, UnitOfWork<FilippSystemContext, Calculation>>();
 
             // seeding the first time
-            services.AddScoped<FilippSystemSeed>();
-
-
+            //services.AddScoped<EmployeeSeed>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

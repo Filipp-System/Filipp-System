@@ -43,7 +43,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.gRPC.Web.Client"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.gRPC.Web.Shared", "src\Calculator.gRPC\Calculator.gRPC.Web\Shared\Calculator.gRPC.Web.Shared.csproj", "{77D64305-90DE-43C7-823B-636F3E91F3AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.Workflow.Tests", "src\test\Calculator.Workflow.Tests\Calculator.Workflow.Tests.csproj", "{9C0F1924-6952-4AD3-ACC8-EBC95B1245B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.Workflow.Tests", "src\test\Calculator.Workflow.Tests\Calculator.Workflow.Tests.csproj", "{9C0F1924-6952-4AD3-ACC8-EBC95B1245B1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.Services", "src\Calculator.Services\Calculator.Services.csproj", "{ECA263F9-C9C0-492B-836D-836B3752960D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-compose", "docker-compose", "{45355DE6-AF0E-4A5F-8D84-C3274D5B02BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB", "MongoDB", "{9DF9F4D9-F44D-4866-B17D-D5612E7012C0}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose-files\mongodb\docker-compose.yml = docker-compose-files\mongodb\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elasticsearch+Kibana", "Elasticsearch+Kibana", "{26247A6C-BA63-4909-937A-45E295258077}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose-files\elastic\docker-compose.yml = docker-compose-files\elastic\docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -142,6 +156,12 @@ Global
 		{9C0F1924-6952-4AD3-ACC8-EBC95B1245B1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C0F1924-6952-4AD3-ACC8-EBC95B1245B1}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C0F1924-6952-4AD3-ACC8-EBC95B1245B1}.Test|Any CPU.Build.0 = Debug|Any CPU
+		{ECA263F9-C9C0-492B-836D-836B3752960D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECA263F9-C9C0-492B-836D-836B3752960D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECA263F9-C9C0-492B-836D-836B3752960D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECA263F9-C9C0-492B-836D-836B3752960D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECA263F9-C9C0-492B-836D-836B3752960D}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECA263F9-C9C0-492B-836D-836B3752960D}.Test|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -166,6 +186,9 @@ Global
 		{AB8CE776-DA38-4284-B861-2F2A8F1A3CF2} = {209C97D2-E136-4D02-9273-41DAA7B39A34}
 		{77D64305-90DE-43C7-823B-636F3E91F3AB} = {209C97D2-E136-4D02-9273-41DAA7B39A34}
 		{9C0F1924-6952-4AD3-ACC8-EBC95B1245B1} = {50EAB7FC-810B-49C9-962F-0A3DB27D1504}
+		{ECA263F9-C9C0-492B-836D-836B3752960D} = {FC722C34-0D51-4F86-9495-4AD528E20D86}
+		{9DF9F4D9-F44D-4866-B17D-D5612E7012C0} = {45355DE6-AF0E-4A5F-8D84-C3274D5B02BF}
+		{26247A6C-BA63-4909-937A-45E295258077} = {45355DE6-AF0E-4A5F-8D84-C3274D5B02BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FFF68CC2-B9AF-44FB-BC47-E58EF366FB3E}

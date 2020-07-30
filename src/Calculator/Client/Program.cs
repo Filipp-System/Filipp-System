@@ -35,8 +35,8 @@ namespace Calculator.Client
             builder.Services.AddApiAuthorization();
 
             // client implementation
-            builder.Services.AddScoped<IBasicRepository<Employee>, WasmRepository>();
-            builder.Services.AddScoped<IUnitOfWork<Employee>, WasmUnitOfWork>();
+            //builder.Services.AddScoped<IBasicRepository<Employee>, WasmRepository>();
+            //builder.Services.AddScoped<IUnitOfWork<Employee>, WasmUnitOfWork>();
             
             // Add DevExpress Blazor Controls
             builder.Services.AddDevExpressBlazor();

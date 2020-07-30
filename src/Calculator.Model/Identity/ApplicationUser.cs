@@ -2,7 +2,7 @@
 using AspNetCore.Identity.MongoDbCore.Models;
 using MongoDbGenericRepository.Attributes;
 
-namespace Calculator.Server.UserSettings
+namespace Calculator.Models.Identity
 {
     [CollectionName("Users")]
     public class ApplicationUser : MongoIdentityUser<Guid>
