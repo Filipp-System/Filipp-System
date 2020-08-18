@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDbGenericRepository;
+using Pomelo.EntityFrameworkCore.MySql.Storage;
 
 namespace Calculator.Server
 {
@@ -30,6 +32,7 @@ namespace Calculator.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // configure the MongoDB connection for the IdentityServer
             var mongoConnectionString = Configuration.GetConnectionString("MongoServer");
             var mongoDatabase = Configuration.GetConnectionString("MongoDatabase");
 
@@ -64,40 +67,19 @@ namespace Calculator.Server
             };
 
             services.ConfigureMongoDbIdentity<ApplicationUser, ApplicationRole, Guid>(mongoDbIdentityConfiguration);
-            //services.AddAuthentication()
-            //    .AddIdentityServerJwt();
-
-
-            //services.AddDbContext<ApplicationFilippSystemDbContext>(options =>
-            //    options.UseSqlite(
-            //        Configuration.GetConnectionString("DefaultConnection")));
-
-
-            //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<ApplicationFilippSystemDbContext>();
-
-            //services.AddIdentityServer()
-            //    .AddApiAuthorization<ApplicationUser, ApplicationFilippSystemDbContext>();
-
-
-
-            //services.AddDbContextFactory<FilippSystemContext>(opt =>
-            //    opt.UseSqlite(Configuration.GetConnectionString(FilippSystemContext.BlazorFilippSystemDb))
-            //        .EnableSensitiveDataLogging());
-
-            //add the repository
-            //services.AddScoped<IDbContextFactory<FilippSystemContext>, DbContextFactory<FilippSystemContext>>();
-            //services.AddScoped<IRepository<Calculation, FilippSystemContext>, CalculationRepository>();
-            //services.AddScoped<IBasicRepository<Calculation>>(sp =>
-            //    sp.GetService<IRepository<Calculation, FilippSystemContext>>());
-            //services.AddScoped<IUnitOfWork<Calculation>, UnitOfWork<FilippSystemContext, Calculation>>();
-
-            // seeding the first time
-            //services.AddScoped<EmployeeSeed>();
+            //services.AddIdentity<ApplicationUser, ApplicationRole>()
+            //    .AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>(mongoConnectionString, mongoDatabase)
+            //    .AddSignInManager()
+            //    .AddDefaultTokenProviders();
+            
+            // setup EF Core with MariaDB, for any database operation needed except the Login and User Management
+            services.AddDbContext<FilippSystemContext>(options =>
+                options.UseMySql(
+                    Configuration.GetConnectionString("MariaDB"),
+                    mySqlOptions => mySqlOptions.ServerVersion(new ServerVersion("10.5.4"))));
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -122,7 +104,6 @@ namespace Calculator.Server
 
             app.UseRouting();
 
-            //app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
 

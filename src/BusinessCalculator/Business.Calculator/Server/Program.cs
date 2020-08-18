@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.Elasticsearch;
 
-namespace Calculator.Server
+namespace Business.Calculator.Server
 {
     public class Program
     {
@@ -27,7 +23,7 @@ namespace Calculator.Server
                 Log.Fatal($"Failed to start {Assembly.GetExecutingAssembly().GetName().Name}", exception);
                 throw;
             }
-            
+
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -49,7 +45,7 @@ namespace Calculator.Server
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", false, true)
-                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")                                                                                                                                                                                                                                                                                                                                                                                                  }.json", true)
+                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", true)
                 .Build();
 
             Log.Logger = new LoggerConfiguration()
