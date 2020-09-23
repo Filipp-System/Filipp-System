@@ -12,7 +12,7 @@ namespace Business.Calculator.Server.Data
     public class CalculatorDbContext : ApplicationDbContext
     {
         private readonly ILogger<CalculatorDbContext> _logger;
-        private readonly CalculatorAdapter _calculatorAdapter = new CalculatorAdapter(_logger);
+        private readonly CalculatorAdapter _calculatorAdapter = new CalculatorAdapter();
         public CalculatorDbContext(DbContextOptions options, 
             IOptions<OperationalStoreOptions> operationalStoreOptions, ILogger<CalculatorDbContext> logger) 
             : base(options, operationalStoreOptions)

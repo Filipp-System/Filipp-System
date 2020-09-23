@@ -38,8 +38,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.Services", "src\Calculator.Services\Calculator.Services.csproj", "{ECA263F9-C9C0-492B-836D-836B3752960D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-compose", "docker-compose", "{45355DE6-AF0E-4A5F-8D84-C3274D5B02BF}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB", "MongoDB", "{9DF9F4D9-F44D-4866-B17D-D5612E7012C0}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose-files\mongodb\docker-compose.yml = docker-compose-files\mongodb\docker-compose.yml
 	EndProjectSection
@@ -54,8 +52,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business.Calculator.Server", "src\BusinessCalculator\Business.Calculator\Server\Business.Calculator.Server.csproj", "{54FC15BF-74A9-4273-88A1-49D09C8708D6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business.Calculator.Client", "src\BusinessCalculator\Business.Calculator\Client\Business.Calculator.Client.csproj", "{1442B069-EBFE-4759-8D27-041939BA6FA0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business.Calculator.Shared", "src\BusinessCalculator\Business.Calculator\Shared\Business.Calculator.Shared.csproj", "{4ACFBA82-68D1-4AF7-90DA-A65B2ECF183C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -142,12 +138,6 @@ Global
 		{1442B069-EBFE-4759-8D27-041939BA6FA0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1442B069-EBFE-4759-8D27-041939BA6FA0}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{1442B069-EBFE-4759-8D27-041939BA6FA0}.Test|Any CPU.Build.0 = Debug|Any CPU
-		{4ACFBA82-68D1-4AF7-90DA-A65B2ECF183C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4ACFBA82-68D1-4AF7-90DA-A65B2ECF183C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4ACFBA82-68D1-4AF7-90DA-A65B2ECF183C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4ACFBA82-68D1-4AF7-90DA-A65B2ECF183C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4ACFBA82-68D1-4AF7-90DA-A65B2ECF183C}.Test|Any CPU.ActiveCfg = Debug|Any CPU
-		{4ACFBA82-68D1-4AF7-90DA-A65B2ECF183C}.Test|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -168,12 +158,10 @@ Global
 		{209C97D2-E136-4D02-9273-41DAA7B39A34} = {FC722C34-0D51-4F86-9495-4AD528E20D86}
 		{9C0F1924-6952-4AD3-ACC8-EBC95B1245B1} = {50EAB7FC-810B-49C9-962F-0A3DB27D1504}
 		{ECA263F9-C9C0-492B-836D-836B3752960D} = {FC722C34-0D51-4F86-9495-4AD528E20D86}
-		{9DF9F4D9-F44D-4866-B17D-D5612E7012C0} = {45355DE6-AF0E-4A5F-8D84-C3274D5B02BF}
 		{26247A6C-BA63-4909-937A-45E295258077} = {45355DE6-AF0E-4A5F-8D84-C3274D5B02BF}
 		{41D085B9-2BA6-4C17-9037-E3DBC2EE56F2} = {FC722C34-0D51-4F86-9495-4AD528E20D86}
 		{54FC15BF-74A9-4273-88A1-49D09C8708D6} = {41D085B9-2BA6-4C17-9037-E3DBC2EE56F2}
 		{1442B069-EBFE-4759-8D27-041939BA6FA0} = {41D085B9-2BA6-4C17-9037-E3DBC2EE56F2}
-		{4ACFBA82-68D1-4AF7-90DA-A65B2ECF183C} = {41D085B9-2BA6-4C17-9037-E3DBC2EE56F2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FFF68CC2-B9AF-44FB-BC47-E58EF366FB3E}
