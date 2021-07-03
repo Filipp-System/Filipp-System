@@ -16,6 +16,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.Client", "src\Calculator\Client\Calculator.Client.csproj", "{76C4E02F-A941-4903-9873-2A5CB47EDC9A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Calculator", "Calculator", "{6569D987-88EF-40B9-B98F-D46EEB9C91A0}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{50851502-1162-441E-B8B1-A9EC4811099D}"
 EndProject
