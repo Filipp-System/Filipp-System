@@ -8,10 +8,5 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Client\Calculator.gRPC.Web.Client.csproj" />
-    <ProjectReference Include="..\Shared\Calculator.gRPC.Web.Shared.csproj" />
-  </ItemGroup>
-
 
 </Project>

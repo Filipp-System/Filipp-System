@@ -49,7 +49,7 @@ namespace Calculator.Server
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", false, true)
-                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", true)
+                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")                                                                                                                                                                                                                                                                                                                                                                                                  }.json", true)
                 .Build();
 
             Log.Logger = new LoggerConfiguration()

@@ -1,9 +1,24 @@
-# Filipp.System Application	 																											![.NET Core](https://github.com/Filipp-System/Filipp-System/workflows/.NET%20Core/badge.svg?branch=master)	
+This is currently the main calc project. Todo:
+	- need to cleanup
+	- move the files from the top project except the authentication/authorization because it will be reworked
+	- after i have a good overview this readme file must be removed and our kanban board gets some tasks
+	- never forget how important the kanban part is. This is our documentation and the version control ofc 
+		but the CEO won't have the time to learn a version control system just because we have a good documentation here. 
+Solution:
+	- check if good tools exists which can create docus from version controls or kanbans or maybe out of vs and kanban linked together. Task to vs pull request (only if the pull request in reviewed and accepted)
+	- the source for the docu should therefore only be the master branch
 
-Filipp System is a big idea which starts small. Our goal is to create a software which offers a solution to a problem many companies right now have: digitalization with a low barrier of entry for all involved. The project owner is also CEO of such a company where he has many ideas on how the workflow could be made smarter by a piece of software. We want to help the employees do their job in a more comfortable way than before to get those who are maybe older or less tech-savvy interested and "into it". Meanwhile we want to build the software in a modular way, so that with time, we can help many companies to obtain the ability to digitize more and more of their workflow without having to rely on heavy weight systems that create a lot of overhead and require extra staff to maintain. It's very important for us to not just build some software. We want to build a piece of good software. We have many years of expierence in software development from scratch. So we take an eye on code quality, testability, performant code, good architecture and smart solutions for different problems. 
+Short Planing which handles the following topics:
+	- .NET 5 Migration
+	- .NET 6 Migration (currently in preview 5, so it will land on a feature branch meanwhile)
+	- very important for me: i need to go through the .NET 6 patchnotes and see where we can get some benefit
+	- rework the blazor webassembly frontend files to get < 5% code duplication
+		means:
+			-- working with pages which can be replaced at livetime
+			-- creating templates soon
+			-- we can upload the page at github "pages" checked it today and looks awesome
+	- also i'll keep an eye on gRPC and maybe build a little proof of concept tool where i will create a checklist before with features we need create a szenario in the PoC Project
 
-For now we could need 1-2 developers who want to be part of something you could make a difference with. We don't earn any money at this point but if we do everything right we can create something big. You are free to plan your work time by yourself. There are no sprint goals right now. But if you wish to work agile, you are welcome. We hold 1-2 voice meetings a week where we dicuss issues or general strategies where your word will take weight. Some bonus: we have the whole JetBrains Toolchain for our OpenSource project. If you are interested feel free to contact me: jjalinski@gmail.com 
+Thats it with the list for the first .. now i feel how my head lost some pounds of swirling weight
 
-If you have any questions regarding the project or the people behind it, feel free buddy.
-
-We'd be glad to hear of you :)
+	

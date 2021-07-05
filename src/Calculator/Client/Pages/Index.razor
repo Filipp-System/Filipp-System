@@ -12,7 +12,7 @@
 
 <p>Diese Ansicht ist nur für die erste alpha version so gestaltet um das wesentliche zu testen.</p>
 <br/>
-<p>Hier wird das Dashboard zukünftig sein.</p>
+<p>Home</p>
 
 @*<ListControl Page="Page" FetchCalculationAsync="(repository, calculations) => FetchAsync(repository, calculations)" />*@
 
@@ -28,15 +28,15 @@
     /// Pass in the actual work so this can be reused between client and server
     /// </summary>
     /// <param name="repository">The <see cref="IBasicRepository{Calculation}"/> to use.</param>
-    /// <param name="employees">How to handle the returned <see cref="ICollection{Calculation}"/>.</param>
+    /// <param name="calculations">How to handle the returned <see cref="ICollection{Calculation}"/>.</param>
     /// <returns>A <see cref="System.Threading.Tasks.Task"/></returns>
-    public async Task FetchAsync(IBasicRepository<Employee> repository, Action<ICollection<Employee>> employees)
+    public async Task FetchAsync(IBasicRepository<Calculation> repository, Action<ICollection<Calculation>> calculations)
     {
-        employees((await repository.GetListAsync()).ToList());
+        calculations((await repository.GetListAsync()).ToList());
     }
 
     // for devexpress grid test purpose
-    public Employee Employee { get; set; }
+    public Calculation Calculation { get; set; }
 
-    readonly ObservableCollection<Employee> employees = new ObservableCollection<Employee>();
+    private readonly ObservableCollection<Calculation> _employees = new ObservableCollection<Calculation>();
 }

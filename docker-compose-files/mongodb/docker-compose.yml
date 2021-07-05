@@ -1,38 +1,49 @@
 version: '3.8'
 
 services:
-  node1:
-    image: mongo 
-    ports:
-      - 30001:27017 
-    volumes:
-      - $HOME/mongoclusterdata/node1:/data/db 
-    networks:
-      - mongocluster
-    command: mongod --replSet comments 
-  node2:
-    image: mongo
-    ports:
-      - 30002:27017
-    volumes:
-      - $HOME/mongoclusterdata/node2:/data/db
-    networks:
-      - mongocluster
-    command: mongod --replSet comments
-    depends_on :
-      - node1 
-  node3:
-    image: mongo
-    ports:
-      - 30003:27017
-    volumes:
-      - $HOME/mongoclusterdata/node3:/data/db
-    networks:
-      - mongocluster
-    command: mongod --replSet comments
-    depends_on :
-        - node2 
+  mariadb:
+   container_name: mariadb
+   image: mariadb:latest
+   restart: always
+   environment:
+    MYSQL_ROOT_PASSWORD: leTderping
+    MYSQL_USER: calcboy
+    MYSQL_PASSWORD: mastercalculator
+   ports:
+    - "3306:3306"
+   volumes:
+    - $HOME/mariadb/data:/var/lib/mysql
+    - $HOME/mariadb/files/init.sql:/docker-entrypoint-initdb.d/calculator-init.sql
+   networks:
+    - backend
 
+  elasticsearch:
+   container_name: elasticsearch
+   image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+   ports:
+    - 9200:9200
+   volumes:
+    - elasticsearch-data:/usr/share/elasticsearch/data
+   environment:
+    - xpack.monitoring.enabled=true
+    - xpack.watcher.enabled=false
+    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    - discovery.type=single-node
+   networks:
+    - backend
+
+  kibana:
+   container_name: kibana
+   image: docker.elastic.co/kibana/kibana:7.8.1
+   ports:
+    - 5601:5601
+   depends_on:
+    - elasticsearch
+   environment:
+    - ELASTICSEARCH_URL=http://localhost:9200
+   networks:
+    - backend
+  
 networks:
-  mongocluster:
-    driver: bridge 
+  backend:
+    driver: bridge

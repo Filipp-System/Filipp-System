@@ -1,0 +1,25 @@
+﻿.wrapper {
+    display: grid;
+    width: 800px;
+    width: 65ch;
+    grid-template-columns:
+                         1fr
+                         min(65ch, 100%)
+                         1fr;
+}
+
+.wrapper > * {
+    grid-column: 2;
+}
+
+.full-bleed {
+    grid-column: 1/-1;
+}
+
+.pseudo-full-bleed {
+    width: 100%;
+    grid-column: 1/4;
+    max-width: 1500px;
+    margin-left: auto;
+    margin-right: auto;
+}

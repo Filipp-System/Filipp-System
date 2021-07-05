@@ -3,6 +3,8 @@ using Calculator.DataAccess;
 using Calculator.Models.DatabaseModels;
 using Calculator.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Moq;
 using Xunit;
 
 namespace Calculator.Workflow.Tests
@@ -24,7 +26,8 @@ namespace Calculator.Workflow.Tests
         {
             // Arrange
             var testCalculationId = 1;
-            _filippSystemContext = new FilippSystemContext(_contextOptions);
+            var loggerMock = new Mock<ILogger<FilippSystemContext>>();
+            _filippSystemContext = new FilippSystemContext(_contextOptions, loggerMock.Object);
 
             // Act
             var calculation = _unitOfWork.Repository.LoadAsync(testCalculationId, _filippSystemContext.User);
